@@ -35,7 +35,7 @@ for tok in TOKENS:
     b.start(bot_token=tok)
     count += 1
     b.run_until_complete(getme(client))
-    print("Started " + BOTS[b].first_name)
+    print(f'Started {BOTS[b].first_name}')
 
 
 def cmd(**args):
@@ -71,11 +71,10 @@ async def add_new_instance(tok):
 
 @cmd(pattern="^/tok ?(.*)")
 async def add_tok(e):
-    if len(e.text.split(" ") > 1):
-        if not ":" in e.text.split(" ", maxsplit=2)[1]:
-            return await e.reply("Eeee erong format.")
-    else:
+    if not len(e.text.split(" ") > 1):
         return await e.reply("No token found.")
+    if ":" not in e.text.split(" ", maxsplit=2)[1]:
+        return await e.reply("Eeee erong format.")
     await add_new_instance(e.text.split(" ", maxsplit=1)[1])
 
 
